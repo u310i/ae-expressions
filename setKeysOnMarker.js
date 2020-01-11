@@ -40,7 +40,7 @@ const getCurrentRange = (targetValue, list) => {
   return list.indexOf(currentValue);
 };
 
-const getNamedNearestKey = (targetMarker, targetName = "", t) => {
+const getNearestMarker = (targetMarker, targetName = "", t) => {
   const markers = getMarkers(targetMarker, targetName);
   if (markers.length === 0) return undefined;
 
@@ -53,6 +53,8 @@ const getNamedNearestKey = (targetMarker, targetName = "", t) => {
 
   return markers[nearestIndex];
 };
+
+const getCurrentRangeMarker = (targetMarker, targetName = "", t) => {};
 
 const setKeysOnMarker = (targetValue, name, t) => {
   const targetMarker = targetValue.marker;
