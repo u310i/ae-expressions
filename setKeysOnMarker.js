@@ -1,13 +1,13 @@
 const sourceL = thisComp.layer("source");
 
-const getMarkers = (targetMarker, targetName = "") => {
+const getMarkers = (targetMarker, targetName) => {
   const length = targetMarker.numKeys;
   const markerList = [];
   if (length) {
     Array(length)
       .fill(0)
       .forEach((_, i) => {
-        if (targetName === "") {
+        if (targetName === undefined) {
           markerList.push(targetMarker.key(i + 1));
         } else {
           if (targetMarker.key(i + 1).comment === targetName) {
@@ -40,21 +40,30 @@ const getCurrentRange = (targetValue, list) => {
   return list.indexOf(currentValue);
 };
 
-const getNearestMarker = (targetMarker, targetName = "", t) => {
+const getMarkerTimeList = markers => {
+  return markers.map(m => {
+    return m.time;
+  });
+};
+
+const getNearestMarkerIndex = (targetMarker, targetName, t) => {
   const markers = getMarkers(targetMarker, targetName);
   if (markers.length === 0) return undefined;
 
-  const timeList = markers.map(m => {
-    return m.time;
-  });
+  const timeList = getMarkerTimeList(markers);
 
-  const nearestIndex = getNearestIndex(t, timeList);
-  if (nearestIndex === -1) return undefined;
+  const currentIndex = getNearestIndex(t, timeList);
+  if (currentIndex === -1) return undefined;
 
-  return markers[nearestIndex];
+  return markers[currentIndex].index;
 };
 
-const getCurrentRangeMarker = (targetMarker, targetName = "", t) => {};
+const getCurrentRangeMarker = (targetMarker, targetName, t) => {
+  const markers = getMarkers(targetMarker, targetName);
+  const timeList = getMarkerTimeList(markers);
+  const currentIndex = getCurrentRange(t, timeList);
+  return markers[currentIndex].index;
+};
 
 const setKeysOnMarker = (targetValue, name, t) => {
   const targetMarker = targetValue.marker;
