@@ -1,17 +1,15 @@
-const sourceL = thisComp.layer("source");
-
-const getMarkers = (targetMarker, targetName) => {
-  const length = targetMarker.numKeys;
+const getMarkers = (marker, name) => {
+  const length = marker.numKeys;
   const markerList = [];
   if (length) {
     Array(length)
       .fill(0)
       .forEach((_, i) => {
-        if (targetName === undefined) {
-          markerList.push(targetMarker.key(i + 1));
+        if (name === undefined) {
+          markerList.push(marker.key(i + 1));
         } else {
-          if (targetMarker.key(i + 1).comment === targetName) {
-            markerList.push(targetMarker.key(i + 1));
+          if (marker.key(i + 1).comment === name) {
+            markerList.push(marker.key(i + 1));
           }
         }
       });
@@ -19,50 +17,43 @@ const getMarkers = (targetMarker, targetName) => {
   return markerList;
 };
 
-const getNearestIndex = (targetValue, list) => {
+const getNearestIndex = (target, list) => {
+  if (list.length === 0) return -1;
   const nearestValue = list.reduce((prev, curr) => {
-    return Math.abs(curr - targetValue) < Math.abs(prev - targetValue)
-      ? curr
-      : prev;
+    return Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev;
   });
   return list.indexOf(nearestValue);
 };
 
-const getCurrentRange = (targetValue, list) => {
+const getCurrentRange = (target, list) => {
   let currentValue;
   list.forEach((v, i) => {
-    if (
-      targetValue >= v &&
-      (i === list.length - 1 || targetValue < list[i + 1])
-    )
+    if (target >= v && (i === list.length - 1 || target < list[i + 1])) {
       currentValue = v;
+    }
   });
   return list.indexOf(currentValue);
 };
 
-const getMarkerTimeList = markers => {
+const getTimeList = markers => {
   return markers.map(m => {
     return m.time;
   });
 };
 
-const getNearestMarkerIndex = (targetMarker, targetName, t) => {
-  const markers = getMarkers(targetMarker, targetName);
-  if (markers.length === 0) return undefined;
-
-  const timeList = getMarkerTimeList(markers);
+const getNearestMarkerIndexfromNamed = (marker, name, t) => {
+  const markers = getMarkers(marker, name);
+  const timeList = getTimeList(markers);
 
   const currentIndex = getNearestIndex(t, timeList);
-  if (currentIndex === -1) return undefined;
-
-  return markers[currentIndex].index;
+  return currentIndex === -1 ? 0 : markers[currentIndex].index;
 };
 
-const getCurrentRangeMarker = (targetMarker, targetName, t) => {
-  const markers = getMarkers(targetMarker, targetName);
-  const timeList = getMarkerTimeList(markers);
+const getActiveMarkerIndexfromNamed = (marker, name, t) => {
+  const markers = getMarkers(marker, name);
+  const timeList = getTimeList(markers);
   const currentIndex = getCurrentRange(t, timeList);
-  return markers[currentIndex].index;
+  return currentIndex === -1 ? 0 : markers[currentIndex].index;
 };
 
 const setKeysOnMarker = (targetValue, name, t) => {
