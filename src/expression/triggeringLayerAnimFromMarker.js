@@ -1,6 +1,4 @@
-import { triggeringLayerAnimFromMarker } from "./scripts/triggeringAnimFromMarker";
-
-export default triggeringLayerAnimFromMarker;
+import { triggeringLayerAnimFromMarker } from "./_library/triggeringAnimFromMarker";
 
 // const propList = [
 //   {
@@ -14,3 +12,5 @@ export default triggeringLayerAnimFromMarker;
 // ];
 // const trigger = thisComp.layer("trigger");
 // triggeringLayerAnimFromMarker(trigger, propList, time);
+
+export default triggeringLayerAnimFromMarker;
