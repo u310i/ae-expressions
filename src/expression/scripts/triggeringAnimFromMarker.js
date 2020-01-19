@@ -1,4 +1,6 @@
-const getActiveMarkerIndex = (marker, t) => {
+import { isNumber } from "../../utils/checkType";
+
+export const getActiveMarkerIndex = (marker, t) => {
   let index = 0;
   if (marker.numKeys > 0) {
     index = marker.nearestKey(t).index;
@@ -9,7 +11,7 @@ const getActiveMarkerIndex = (marker, t) => {
   return index;
 };
 
-const triggeringCompAnimFromMarker = (triggerLayer, sourceLayer, t) => {
+export const triggeringCompAnimFromMarker = (triggerLayer, sourceLayer, t) => {
   const index = getActiveMarkerIndex(triggerLayer.marker, t);
   if (index === 0) {
     return 0;
@@ -33,15 +35,7 @@ const triggeringCompAnimFromMarker = (triggerLayer, sourceLayer, t) => {
   }
 };
 
-const sourceLayer = comp("animComp").layer("action");
-const triggerLayer = thisComp.layer("animComp");
-triggeringCompAnimFromMarker(triggerLayer, sourceLayer, time);
-
-const isNumber = data => {
-  return typeof data === "number" && data > neginf && data < posinf;
-};
-
-const triggeringLayerAnimFromMarker = (triggerLayer, propList, t) => {
+export const triggeringLayerAnimFromMarker = (triggerLayer, propList, t) => {
   const index = getActiveMarkerIndex(triggerLayer.marker, t);
 
   const isArray = !isNumber(value) && Array.isArray(value);
@@ -75,16 +69,3 @@ const triggeringLayerAnimFromMarker = (triggerLayer, propList, t) => {
     ? add(value, addValue)
     : returnZero();
 };
-
-const propList = [
-  {
-    name: "yoko",
-    prop: thisComp.layer("yoko").transform.position
-  },
-  {
-    name: "tate",
-    prop: thisComp.layer("tate").transform.position
-  }
-];
-const trigger = thisComp.layer("trigger");
-triggeringLayerAnimFromMarker(trigger, propList, time);
