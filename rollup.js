@@ -1,5 +1,5 @@
 const path = require("path");
-const babel = require("rollup-plugin-babel");
+// const babel = require("rollup-plugin-babel");
 // const cleanup = require("rollup-plugin-cleanup");
 const rollup = require("rollup");
 const glob = require("glob");
@@ -13,7 +13,7 @@ const entries = glob.sync("**/*.js", {
   cwd: srcDir
 });
 
-//リストアップしたjsファイルをバンドルする。
+// es3
 // for (let entry of entries) {
 //   const inputOptions = {
 //     input: path.resolve(srcDir, entry),
@@ -27,6 +27,7 @@ const entries = glob.sync("**/*.js", {
 //   build(inputOptions, outputOptions);
 // }
 
+// バンドルのみ
 for (let entry of entries) {
   const inputOptions = {
     input: path.resolve(srcDir, entry)
