@@ -12,6 +12,8 @@
   "devDependencies": {
     "@babel/cli": "^7.8.3",
     "@babel/core": "^7.8.3",
+    "@babel/plugin-transform-arrow-functions": "^7.8.3",
+    "@babel/plugin-transform-block-scoping": "^7.8.3",
     "@babel/plugin-transform-member-expression-literals": "^7.8.3",
     "@babel/plugin-transform-property-literals": "^7.8.3",
     "@babel/plugin-transform-property-mutators": "^7.8.3",

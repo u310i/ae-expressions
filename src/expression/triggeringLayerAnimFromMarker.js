@@ -1,6 +1,6 @@
 import { triggeringLayerAnimFromMarker } from "./_library/triggeringAnimFromMarker";
 
-// const propList = [
+// var propList = [
 //   {
 //     name: "yoko",
 //     prop: thisComp.layer("yoko").transform.position
@@ -10,7 +10,7 @@ import { triggeringLayerAnimFromMarker } from "./_library/triggeringAnimFromMark
 //     prop: thisComp.layer("tate").transform.position
 //   }
 // ];
-// const trigger = thisComp.layer("trigger");
+// var trigger = thisComp.layer("trigger");
 // triggeringLayerAnimFromMarker(trigger, propList, time);
 
 export default triggeringLayerAnimFromMarker;

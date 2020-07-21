@@ -1,8 +1,8 @@
 var triggeringCompAnimFromMarker = (function () {
   'use strict';
 
-  const getActiveMarkerIndex = (marker, t) => {
-    let index = 0;
+  var getActiveMarkerIndex = function(marker, t) {
+    var index = 0;
     if (marker.numKeys > 0) {
       index = marker.nearestKey(t).index;
       if (marker.key(index).time > t) {
@@ -12,28 +12,39 @@ var triggeringCompAnimFromMarker = (function () {
     return index;
   };
 
-  const triggeringCompAnimFromMarker = (triggerLayer, sourceLayer, t) => {
-    const index = getActiveMarkerIndex(triggerLayer.marker, t);
-    if (index === 0) {
-      return 0;
+  var returnZero = function() {
+    return 0;
+  };
+
+  const triggeringCompAnimFromMarker = (triggerLayer, animLayer, t) => {
+    var index = getActiveMarkerIndex(triggerLayer.marker, t);
+
+    var resultTime;
+    if (index == 0) {
+      resultTime = returnZero();
     } else {
-      const trigger = triggerLayer.marker.key(index);
-      const triggerComment = trigger.comment;
-      const triggerTime = t - trigger.time;
+      var currentMarker = triggerLayer.marker.key(index);
+      var name = currentMarker.comment;
+      var offsetTime = t - currentMarker.time;
       try {
-        let tMax;
-        actMarker = sourceLayer.marker.key(triggerComment);
-        if (sourceLayer.marker.numKeys > actMarker.index) {
-          tMax =
-            sourceLayer.marker.key(actMarker.index + 1).time - actMarker.time;
+        var actMarker = animLayer.marker.key(name);
+        var maxTime;
+        if (animLayer.marker.numKeys > actMarker.index) {
+          maxTime =
+            animLayer.marker.key(actMarker.index + 1).time - actMarker.time;
         } else {
-          tMax = sourceLayer.outPoint - actMarker.time - framesToTime(1);
+          maxTime = framesToTime(
+            timeToFrames(animLayer.outPoint - actMarker.time) - 1
+          );
         }
-        return actMarker.time + Math.min(triggerTime, tMax);
+        var addTime = Math.min(offsetTime, maxTime);
+        resultTime = actMarker.time + addTime;
       } catch (err) {
-        return 0;
+        resultTime = returnZero();
       }
     }
+
+    return resultTime;
   };
 
   return triggeringCompAnimFromMarker;

@@ -1,7 +1,7 @@
 import { triggeringCompAnimFromMarker } from "./_library/triggeringAnimFromMarker";
 
-// const sourceLayer = comp("animComp").layer("action");
-// const triggerLayer = thisComp.layer("animComp");
-// triggeringCompAnimFromMarker(triggerLayer, sourceLayer, time);
+// var sourceLayer = comp("animComp").layer("action");
+// var triggerLayer = thisComp.layer("animComp");
+// triggeringCompAnimFromMarker(triggerLayer, animLayer, time);
 
 export default triggeringCompAnimFromMarker;

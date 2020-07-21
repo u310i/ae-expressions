@@ -9,7 +9,7 @@ const distDir = "./dist";
 
 // ./src以下のjsファイルのリストを取得する。ただし_から始まるファイルとmodulesディレクトリは除外する。
 const entries = glob.sync("**/*.js", {
-  ignore: ["modules/**/*.js", "**/_*/*"],
+  ignore: ["modules/**/*.js", "**/_*/*", "**/_*"],
   cwd: srcDir
 });
 
